@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import SearchBar from './Searchbar';
+import SearchBar from '../../components/searchbar';
 
 interface LayoutProps {
   children: ReactNode;

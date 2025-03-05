@@ -18,6 +18,14 @@
 2. 이후 hydration을 위해 컴포넌트들을 모아 JS Bundle로 전달하는 과정에서는 server 컴포넌트들은 제외됨
 3. 따라서 client 컴포넌트들만 JS Bundle에 포함되어 브라우저에 전달되기 때문에, client 컴포넌트들만 client측(브라우저)에서 한번 더 실행됨.
 
+### 초기 접속 이후 요청되는 페이지 이동
+
+1. 기본적으로 CSR방식으로 처리, 그렇다면 브라우저가 이동할 페이지에 대한 데이터가 필요
+   - 따라서 JS Bundle + RSC Payload를 함께 전달해주게 됨.
+     - JS Bundle: Client Component 만 들어있음
+     - RSC Paayload: Server Component 만 들어있음
+2. 마지막으로 브라우저에서는 JS Bundle과 RSC Payload 를 합쳐서 페이지를 적절히 교체하게됨
+
 ### 정리
 
 1. 서버 컴포넌트
