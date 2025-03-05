@@ -1,4 +1,4 @@
-# App Rendering
+# App Routing
 
 ### 클라이언트 컴포넌트와 서버 컴포넌트의 이해
 
@@ -35,4 +35,23 @@
 2. 클라이언트 문법을 사용하려면 컴포넌트 파일의 가장 첫 줄에 'use client'을 명시하여 클라이언트 컴포넌트로 지정해야 함
 3. 클라이언트 컴포넌트는 클라이언트에서만 실행되지 않음. (처음에 서버에서 한번 실행됨)
 4. 클라이언트 컴포넌트에서 서버 컴포넌트 import 불가
-5. 서버 컴포넌트에서 클라이언트 컴포넌트에게 직렬화 되지 않는 props는 전달 불가가
+   - 그러나 클라이언트 컴포넌트가 반드시 서버 컴포넌트를 자식으로 가져야 한다면 가능은 함.
+   - Client Component :
+     ```tsx
+     function ClientComponent({ children }: { children: ReactNode }) {
+       return <div>{children}</div>;
+     }
+     ```
+   - Home :
+   ```tsx
+     funtion Home() {
+      return (
+         <ClientComponent>
+            <ServerComponent>
+         <ClientComponent>
+      )}
+   ```
+5. 서버 컴포넌트에서 클라이언트 컴포넌트에게 직렬화(RSC payload) 되지 않는 props는 전달 불가
+   - 직렬화 : 객체, 배열, 클래스 등의 복잡한 구조의 데이터를 네트워크 상으로 전송하기 위해 아주 단순한 형태(byte,문자열)로 변환하는 것
+   - ex: `const person = {name: '카리나', age: 27} -> {'name':'카리나', 'age':27}`
+   - 참고로 JS 함수는 직렬화 불가능함
