@@ -43,14 +43,14 @@
      }
      ```
    - Home :
-   ```tsx
+     ```tsx
      funtion Home() {
-      return (
-         <ClientComponent>
+        return (
+           <ClientComponent>
             <ServerComponent>
-         <ClientComponent>
-      )}
-   ```
+           <ClientComponent>
+        )}
+     ```
 5. 서버 컴포넌트에서 클라이언트 컴포넌트에게 직렬화(RSC payload) 되지 않는 props는 전달 불가
    - 직렬화 : 객체, 배열, 클래스 등의 복잡한 구조의 데이터를 네트워크 상으로 전송하기 위해 아주 단순한 형태(byte,문자열)로 변환하는 것
    - ex: `const person = {name: '카리나', age: 27} -> {'name':'카리나', 'age':27}`
