@@ -1,5 +1,7 @@
 import BookItem from '@/components/book-item';
 import { BookData } from '@/types';
+import { delay } from '@/utils/delay';
+import { Suspense } from 'react';
 
 interface SearchParams {
   q?: string;
@@ -9,8 +11,8 @@ interface PageProps {
   searchParams: Promise<SearchParams>;
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const { q } = await searchParams;
+async function SearchResult({ q }: { q: string }) {
+  await delay(1500);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
     { cache: 'force-cache' }
@@ -27,5 +29,15 @@ export default async function Page({ searchParams }: PageProps) {
         <BookItem key={book.id} {...book} />
       ))}
     </div>
+  );
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  // await delay(1500);
+  const { q } = await searchParams;
+  return (
+    <Suspense key={q || ''} fallback={<div>로딩딩동</div>}>
+      <SearchResult q={q || ''}></SearchResult>
+    </Suspense>
   );
 }
