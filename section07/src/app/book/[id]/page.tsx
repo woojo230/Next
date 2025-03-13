@@ -1,7 +1,7 @@
 import { BookData } from '@/types';
 import style from './page.module.css';
 import { notFound } from 'next/navigation';
-import { log } from 'console';
+import { createReviewAction } from '../../../actions/create-review.action';
 
 interface BookParams {
   id: string;
@@ -55,21 +55,13 @@ async function BookDetail({ bookIdParams }: { bookIdParams: string }) {
   );
 }
 
-function ReviewEditor() {
-  async function createReviewAction(formdata: FormData) {
-    'use server';
-    console.log('server action calles');
-    console.log(formdata);
-    const content = formdata.get('content')?.toString();
-    const author = formdata.get('author')?.toString();
-    console.log('우헤헿헿', content, author);
-  }
-
+function ReviewEditor({ bookIdParams }: { bookIdParams: string }) {
   return (
     <section>
       <form action={createReviewAction}>
-        <input name="content" placeholder="리뷰내용" />
-        <input name="author" placeholder="작성자" />
+        <input name="bookId" value={bookIdParams} hidden readOnly />
+        <input required name="content" placeholder="리뷰내용" />
+        <input required name="author" placeholder="작성자" />
         <button type="submit">작성하기</button>
       </form>
     </section>
@@ -82,7 +74,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <div className={style.container}>
       <BookDetail bookIdParams={id} />
-      <ReviewEditor />
+      <ReviewEditor bookIdParams={id} />
     </div>
   );
 }
